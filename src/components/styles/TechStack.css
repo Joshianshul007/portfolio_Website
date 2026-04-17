@@ -1,0 +1,185 @@
+.skills-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  background-color: var(--backgroundColor);
+  overflow: hidden;
+  z-index: 2;
+}
+
+.skills-section h2 {
+  font-size: 70px;
+  font-weight: 500;
+  margin-bottom: 80px;
+  text-align: center;
+  z-index: 10;
+}
+
+.skills-section h2 span {
+  color: var(--accentColor);
+}
+
+.skills-tree-container {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  height: 800px;
+  margin: 0 auto;
+}
+
+/* Central Trunk */
+.skills-trunk {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+/* Individual Branch Container */
+.skill-branch {
+  position: absolute;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  opacity: 0; /* Starts hidden for GSAP scroll trigger */
+  will-change: transform, opacity;
+}
+
+.skill-branch.left {
+  right: 50%;
+  flex-direction: row-reverse;
+  transform-origin: right center;
+}
+
+.skill-branch.right {
+  left: 50%;
+  flex-direction: row;
+  transform-origin: left center;
+}
+
+/* White Stick */
+.skill-stick {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.4);
+  /* The width sets how far out the badge goes */
+  width: 100px;
+  position: relative;
+}
+
+.skill-branch.left .skill-stick {
+  margin-left: 15px; 
+}
+
+.skill-branch.right .skill-stick {
+  margin-right: 15px;
+}
+
+/* Badge specific floating (opposite/independent of branch sway) */
+.skill-badge-container {
+  display: flex;
+  align-items: center;
+}
+
+/* The Glassmorphism Badge */
+.skill-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  border-radius: 30px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  pointer-events: none; /* No interaction as requested */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Continuous Sway Animations */
+.sway-left {
+  animation: swayLeft var(--sway-duration, 5s) ease-in-out infinite alternate var(--sway-delay, 0s);
+}
+
+.sway-right {
+  animation: swayRight var(--sway-duration, 5s) ease-in-out infinite alternate var(--sway-delay, 0s);
+}
+
+.float-badge {
+  animation: floatBadge var(--float-duration, 4s) ease-in-out infinite alternate var(--float-delay, 0s);
+}
+
+@keyframes swayLeft {
+  0% { transform: rotate(8deg); }
+  100% { transform: rotate(16deg); }
+}
+
+@keyframes swayRight {
+  0% { transform: rotate(-8deg); }
+  100% { transform: rotate(-16deg); }
+}
+
+@keyframes floatBadge {
+  0% { transform: translateY(-4px); }
+  100% { transform: translateY(4px); }
+}
+
+/* Responsive Overrides */
+@media screen and (max-width: 900px) {
+  .skills-tree-container {
+    height: 1000px;
+  }
+  
+  .skills-trunk {
+    left: 20px; /* Move trunk to left edge on mobile */
+  }
+  
+  .skill-branch.left,
+  .skill-branch.right {
+    width: calc(100% - 20px);
+    left: 20px;
+    right: auto;
+    flex-direction: row;
+    transform-origin: left center;
+    /* Reassign left-side branches to act like right-side on mobile */
+  }
+
+  .skill-branch.left .skill-stick {
+    margin-left: 0;
+    margin-right: 15px;
+  }
+
+  .sway-left {
+    /* Reassign animation to rightwards tilt so it doesn't cross trunk */
+    animation: swayRight var(--sway-duration, 5s) ease-in-out infinite alternate var(--sway-delay, 0s);
+  }
+  
+  .skill-stick {
+    width: 30px; /* Shorter sticks on mobile */
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .skills-section h2 {
+    font-size: 45px;
+    margin-bottom: 40px;
+  }
+  
+  .skills-section {
+    padding: 60px 0;
+    min-height: auto;
+  }
+}

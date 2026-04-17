@@ -1,0 +1,122 @@
+.about-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  place-items: center;
+  position: relative;
+  opacity: 1;
+  min-height: 80vh;
+  width: var(--cWidth);
+  margin: auto;
+}
+
+/* The Outer Boundary that clips the rotating background */
+.about-card-fluid {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  border-radius: 20px;
+  padding: 6px; /* THIS determines the thickness of your rainbow border! */
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Float Up slowly on Hover to keep it interactive */
+.about-card-fluid:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 60px rgba(165, 180, 252, 0.4);
+}
+
+/* The Rotating Massive Rainbow Gradient Layer */
+.about-card-fluid::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
+    #9400d3,
+    #ff0000
+  );
+  transform: translate(-50%, -50%);
+  animation: spinFluid 4s linear infinite;
+  z-index: 1; /* Below the core box */
+}
+
+@keyframes spinFluid {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* The Core Inner Dark Container protecting the text */
+.fluid-inner-core {
+  position: relative;
+  z-index: 2; /* Needs to sit cleanly above the spinning layer */
+  background: rgba(15, 20, 35, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 16px; /* Slightly tighter so it perfectly hugs the thick edge organically */
+  padding: 50px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.fluid-inner-core h3 {
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  font-weight: 500;
+  color: var(--accentColor);
+  margin: 0 0 20px 0;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.fluid-inner-core p {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 300;
+  font-size: 24px;
+  line-height: 40px;
+  letter-spacing: 0.5px;
+  font-family: "Geist", sans-serif;
+  margin: 0;
+}
+
+/* Responsive constraints */
+@media only screen and (max-width: 768px) {
+  .fluid-inner-core {
+    padding: 30px;
+    border-radius: 14px;
+  }
+  .about-card-fluid {
+    margin: 0 20px;
+  }
+  .fluid-inner-core p {
+    font-size: 18px;
+    line-height: 32px;
+  }
+}
+
+@media only screen and (min-width: 1025px) {
+  .about-section {
+    min-height: 60vh;
+  }
+  .fluid-inner-core p {
+    font-size: 28px;
+    line-height: 48px;
+  }
+}
